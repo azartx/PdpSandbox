@@ -1,0 +1,21 @@
+[versions]
+android-agp = "8.2.2"
+kotlin-android = "1.9.10"
+paging = "3.2.1"
+androidx-coreKtx = "1.12.0"
+androidx-appcompat = "1.6.1"
+google-material = "1.11.0"
+
+[libraries]
+paging-common = { module = "androidx.paging:paging-runtime", version.ref = "paging" }
+androidx-coreKtx = { module = "androidx.core:core-ktx", version.ref = "androidx-coreKtx" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
+google-material = { module = "com.google.android.material:material", version.ref = "google-material" }
+
+
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle-api", version.ref = "android-agp" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "android-agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-android" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-android" }
