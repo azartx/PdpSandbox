@@ -52,7 +52,6 @@ android {
             }
         }
     }
-    tasks.build.dependsOn("createFlavourTimestampReportTask")
 }
 
 dependencies {
@@ -67,7 +66,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
 
-task("createFlavourTimestampReportTask") {
+val createFlavourTimestampReportTask: TaskProvider<Task> = tasks.register("createFlavourTimestampReportTask") {
     doLast {
         val currentFlavour = android.productFlavors.firstOrNull { it.isDefault } ?: return@doLast
         val reportFolder =
@@ -79,3 +78,9 @@ task("createFlavourTimestampReportTask") {
         reportFolder.writeText("Last usage in millis: ${Calendar.getInstance().time}")
     }
 }
+
+val printProjectName: TaskProvider<Task> = tasks.register("printProjectName") {
+    println(providers.gradleProperty("projname").get())
+}
+
+tasks.build.dependsOn(listOf(createFlavourTimestampReportTask, printProjectName))
