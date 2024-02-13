@@ -9,8 +9,8 @@
     <fragment
         android:id="@+id/FirstFragment"
         android:label="@string/first_fragment_label"
-        android:name="com.skaskasian.pdpsandbox.UserProfileFragment"
-        tools:layout="@layout/fragment_user_profile">
+        android:name="com.skaskasian.pdpsandbox.presentation.screens.contentlist.ContentListFragment"
+        tools:layout="@layout/fragment_content_list">
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
