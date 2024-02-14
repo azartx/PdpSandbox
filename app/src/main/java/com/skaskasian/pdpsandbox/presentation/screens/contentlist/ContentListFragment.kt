@@ -5,18 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.skaskasian.pdpsandbox.databinding.FragmentUserProfileBinding
+import com.skaskasian.pdpsandbox.databinding.FragmentContentListBinding
 
 class ContentListFragment : Fragment() {
 
-    private var _binding: FragmentUserProfileBinding? = null
+    private var _binding: FragmentContentListBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentUserProfileBinding.inflate(inflater, container, false)
+        _binding = FragmentContentListBinding.inflate(inflater, container, false)
         return binding.root
     }
 

@@ -5,17 +5,21 @@ paging = "3.2.1"
 androidx-coreKtx = "1.12.0"
 androidx-appcompat = "1.6.1"
 google-material = "1.11.0"
+androidx-room = "2.6.1"
+google-ksp = "1.8.10-1.0.9"
 
 [libraries]
 paging-common = { module = "androidx.paging:paging-runtime", version.ref = "paging" }
 androidx-coreKtx = { module = "androidx.core:core-ktx", version.ref = "androidx-coreKtx" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 google-material = { module = "com.google.android.material:material", version.ref = "google-material" }
-
-
+androidx-room = { module = "androidx.room:room-runtime", version.ref = "androidx-room" }
+androidx-roomKtx = { module = "androidx.room:room-ktx", version.ref = "androidx-room" }
+androidx-roomCompiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle-api", version.ref = "android-agp" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-android" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-android" }
+google-ksp = { id = "com.google.devtools.ksp", version.ref = "google-ksp" }

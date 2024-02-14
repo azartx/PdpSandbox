@@ -1,3 +1,5 @@
+import org.gradle.api.Project
+import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.DependencyHandlerScope
 
 object Libs {
@@ -36,6 +38,14 @@ data class Plugin(
 )
 
 fun DependencyHandlerScope.applyAndroidxDependencies() {
-    "implementation"(Libs.Dependencies.androidxCoreKtx)
-    "implementation"(Libs.Dependencies.androidxAppCompat)
+    implementation(Libs.Dependencies.androidxCoreKtx)
+    implementation(Libs.Dependencies.androidxAppCompat)
+}
+
+fun DependencyHandlerScope.applyRoom(project: Project) {
+    project.catalog.apply {
+        implementation(getVersion("androidx-room"))
+        implementation(getVersion("androidx-roomKtx"))
+        "ksp"(getVersion("androidx-roomCompiler"))
+    }
 }

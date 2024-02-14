@@ -5,8 +5,9 @@ import java.util.Calendar
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
+  //  alias(libs.plugins.kotlin.android)
     id(Libs.Plugins.androidAppPlugin.id)
+    alias(libs.plugins.google.ksp)
 }
 
 applyAppName {
@@ -57,6 +58,7 @@ android {
 dependencies {
 
     applyAndroidxDependencies()
+    applyRoom(project)
     implementation(libs.google.material)
     implementation(libs.paging.common)
     testImplementation("junit:junit:4.13.2")
