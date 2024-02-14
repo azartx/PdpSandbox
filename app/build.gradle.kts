@@ -7,8 +7,8 @@ import com.skaskasian.buildlogic.applyRoom
 
 plugins {
     alias(libs.plugins.android.application)
+    kotlin("android")
     alias(libs.plugins.google.ksp)
-    id(libs.plugins.kotlin.android.get().pluginId)
     id(libs.plugins.pdpsandbox.androidAppPlugin.get().pluginId)
 }
 
