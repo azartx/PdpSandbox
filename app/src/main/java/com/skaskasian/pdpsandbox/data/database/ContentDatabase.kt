@@ -21,7 +21,7 @@ abstract class ContentDatabase : RoomDatabase() {
             return Room.databaseBuilder(
                 context,
                 ContentDatabase::class.java,
-                "contend_db"
+                "content_db"
             )
                 .createFromAsset("content_db")
                 .build()
