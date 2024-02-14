@@ -1,3 +1,5 @@
+package com.skaskasian.buildlogic
+
 interface ApplyNameExtension {
 
     /**

@@ -1,13 +1,14 @@
 plugins {
-    `java-gradle-plugin`
-    alias(libs.plugins.kotlin.jvm)
+    `kotlin-dsl`
 }
+
+group = "com.skaskasian.buildlogic"
 
 gradlePlugin {
     plugins {
         create("android-app-plugin") {
             id = "android-app-plugin"
-            implementationClass = "AndroidAppPlugin"
+            implementationClass = "com.skaskasian.buildlogic.AndroidAppPlugin"
         }
     }
 }

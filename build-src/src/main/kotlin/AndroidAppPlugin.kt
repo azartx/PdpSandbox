@@ -1,3 +1,5 @@
+package com.skaskasian.buildlogic
+
 import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
@@ -21,7 +23,7 @@ class AndroidAppPlugin : Plugin<Project> {
             }
             // should be work only when executing build task in :app module
             // or executing :applyAppName task
-            it.tasks
+            tasks
                 .getByPath(":app:preBuild")
                 .finalizedBy("applyAppName")
         }
@@ -46,13 +48,13 @@ class AndroidAppPlugin : Plugin<Project> {
                     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 }
                 buildTypes {
-                    getByName("release") { releaseType ->
-                        releaseType.isShrinkResources = true
-                        releaseType.isMinifyEnabled = true
+                    getByName("release") {
+                        isShrinkResources = true
+                        isMinifyEnabled = true
                     }
-                    getByName("debug") { debugType ->
-                        debugType.isShrinkResources = false
-                        debugType.isMinifyEnabled = false
+                    getByName("debug") {
+                        isShrinkResources = false
+                        isMinifyEnabled = false
                     }
                 }
                 compileOptions {

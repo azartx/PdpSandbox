@@ -2,12 +2,14 @@ import com.android.build.api.variant.FilterConfiguration.FilterType
 import com.android.build.gradle.internal.tasks.factory.dependsOn
 import org.jetbrains.kotlin.incremental.createDirectory
 import java.util.Calendar
+import com.skaskasian.buildlogic.applyAndroidxDependencies
+import com.skaskasian.buildlogic.applyRoom
 
 plugins {
     alias(libs.plugins.android.application)
-  //  alias(libs.plugins.kotlin.android)
-    id(Libs.Plugins.androidAppPlugin.id)
     alias(libs.plugins.google.ksp)
+    id(libs.plugins.kotlin.android.get().pluginId)
+    id(libs.plugins.pdpsandbox.androidAppPlugin.get().pluginId)
 }
 
 applyAppName {

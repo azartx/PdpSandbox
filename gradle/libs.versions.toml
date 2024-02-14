@@ -1,6 +1,6 @@
 [versions]
 android-agp = "8.2.2"
-kotlin-android = "1.9.10"
+kotlin-android = "1.9.20"
 paging = "3.2.1"
 androidx-coreKtx = "1.12.0"
 androidx-appcompat = "1.6.1"
@@ -21,5 +21,7 @@ android-gradlePlugin = { group = "com.android.tools.build", name = "gradle-api",
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-android" }
+kotlin-gradlePlugin = { id = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin-android" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-android" }
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "google-ksp" }
+pdpsandbox-androidAppPlugin = { id = "android-app-plugin" }
