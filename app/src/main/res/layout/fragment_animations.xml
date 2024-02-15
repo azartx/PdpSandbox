@@ -7,7 +7,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1f">
+        android:layout_weight="1">
 
         <com.skaskasian.pdpsandbox.presentation.views.CircleView
             android:id="@+id/circleview_circle"
@@ -21,6 +21,14 @@
         android:id="@+id/chipgroup_chips"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1f" />
+        android:layout_weight="1" >
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_anim_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Anim1" />
+
+    </com.google.android.material.chip.ChipGroup>
 
 </LinearLayout>
