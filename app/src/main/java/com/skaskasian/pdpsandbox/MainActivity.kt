@@ -4,6 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import androidx.fragment.app.Fragment
+import com.skaskasian.pdpsandbox.presentation.helloworld.HelloWorldFragment
+import com.skaskasian.pdpsandbox.presentation.screens.animations.AnimationsFragment
 import com.skaskasian.pdpsandbox.presentation.screens.contentlist.ContentListFragment
 
 class MainActivity : AppCompatActivity() {
@@ -14,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
 
         supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container_main, ContentListFragment::class.java, null)
+            .add(R.id.fragment_container_main, HelloWorldFragment::class.java, null)
             .addToBackStack(ContentListFragment::class.java.simpleName)
             .commit()
     }
@@ -26,8 +29,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_pagination -> navigate<ContentListFragment>()
+            R.id.action_animation -> navigate<AnimationsFragment>()
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private inline fun <reified FRAGMENT : Fragment> navigate(): Boolean {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container_main, FRAGMENT::class.java, null)
+            .addToBackStack(FRAGMENT::class.java.simpleName)
+            .commit()
+        return true
     }
 }

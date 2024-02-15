@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1f">
+
+        <com.skaskasian.pdpsandbox.presentation.views.CircleView
+            android:id="@+id/circleview_circle"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipgroup_chips"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1f" />
+
+</LinearLayout>
