@@ -18,3 +18,4 @@ local.properties
 /buildSrc/build/
 /buildSrc/build/classes/kotlin/main/
 /build-src/build/
+.idea
