@@ -28,6 +28,21 @@ class AnimationsViewModel : ViewModel(), ValueAnimator.AnimatorUpdateListener {
         animator.start()
     }
 
+    fun startAnim2() {
+        currentAnimType.value = AnimType.Anim2
+
+        val animator = ValueAnimator.ofFloat(0.2f)
+        disposables += object : Disposable {
+            override fun dispose() {
+                animator.removeAllUpdateListeners()
+                animator.cancel()
+            }
+        }
+        animator.duration = 700
+        animator.addUpdateListener(this)
+        animator.start()
+    }
+
     override fun onAnimationUpdate(animation: ValueAnimator) {
         _updateViewState.tryEmit(currentAnimType.value to animation.animatedValue as Float)
     }
@@ -51,5 +66,5 @@ private interface Disposable {
 
 enum class AnimType {
 
-    None, Anim1
+    None, Anim1, Anim2
 }

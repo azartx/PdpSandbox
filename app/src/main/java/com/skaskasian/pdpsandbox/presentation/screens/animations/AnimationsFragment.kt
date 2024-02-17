@@ -50,6 +50,7 @@ class AnimationsFragment : Fragment() {
                 viewModel.updateViewState.collectLatest { animData ->
                     when (animData.first) {
                         AnimType.Anim1 -> applyAnim1Value(animData.second as Float)
+                        AnimType.Anim2 -> applyAnim2Value(animData.second as Float)
                         else -> Unit
                     }
                 }
@@ -59,11 +60,18 @@ class AnimationsFragment : Fragment() {
         applyChips()
     }
 
+    private fun applyAnim2Value(value: Float) {
+        binding?.let {
+            it.circleviewCircle.scaleX += value
+            it.circleviewCircle.scaleY += value
+        }
+    }
+
     private fun applyAnim1Value(value: Float) {
         binding?.let { it.circleviewCircle.x += value }
     }
 
-    private fun applyDefaultCircleState() {
+    private fun setDefaultCircleState() {
         animationJob?.cancel()
         binding?.circleviewCircle?.apply {
             x = defaultPosition.first
@@ -78,13 +86,14 @@ class AnimationsFragment : Fragment() {
         binding?.apply {
             chipCircleDefault.onClick {}
             chipAnim1.onClick { viewModel.startAnim1() }
+            chipAnim2.onClick { viewModel.startAnim2() }
         }
     }
 
     private fun Chip.onClick(action: (View) -> Unit) {
         setOnClickListener {
             viewModel.stopAnimations()
-            applyDefaultCircleState()
+            setDefaultCircleState()
             action.invoke(it)
         }
     }
