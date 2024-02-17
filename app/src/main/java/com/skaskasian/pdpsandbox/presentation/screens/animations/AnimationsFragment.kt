@@ -76,6 +76,7 @@ class AnimationsFragment : Fragment() {
 
     private fun applyChips() {
         binding?.apply {
+            chipCircleDefault.onClick {}
             chipAnim1.onClick { viewModel.startAnim1() }
         }
     }
