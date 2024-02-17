@@ -1,22 +1,28 @@
 package com.skaskasian.pdpsandbox.presentation.screens.animations
 
-import android.animation.ValueAnimator
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.doOnLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.chip.Chip
 import com.skaskasian.pdpsandbox.databinding.FragmentAnimationsBinding
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class AnimationsFragment : Fragment() {
 
     private var binding: FragmentAnimationsBinding? = null
+
+    private val viewModel: AnimationsViewModel by lazy {
+        ViewModelProvider(this)[AnimationsViewModel::class.java]
+    }
 
     private lateinit var defaultPosition: Pair<Float, Float>
 
@@ -31,10 +37,7 @@ class AnimationsFragment : Fragment() {
             binding = this
             circleviewCircle.doOnLayout {
                 defaultPosition = it.x to it.y
-                Log.e("ffff", defaultPosition.toString())
             }
-
-
             root
         }
     }
@@ -42,9 +45,22 @@ class AnimationsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                viewModel.updateViewState.collectLatest { animData ->
+                    when (animData.first) {
+                        AnimType.Anim1 -> applyAnim1Value(animData.second as Float)
+                        else -> Unit
+                    }
+                }
+            }
+        }
+
         applyChips()
+    }
 
-
+    private fun applyAnim1Value(value: Float) {
+        binding?.let { it.circleviewCircle.x += value }
     }
 
     private fun applyDefaultCircleState() {
@@ -60,23 +76,13 @@ class AnimationsFragment : Fragment() {
 
     private fun applyChips() {
         binding?.apply {
-            chipAnim1.onClick {
-                animationJob = viewLifecycleOwner.lifecycleScope.launch() {
-                    ValueAnimator.ofFloat(5f).apply {
-                        addUpdateListener { animator ->
-                            binding?.circleviewCircle!!.x +=animatedValue as Float
-                        }
-
-                        duration = 2000
-                        start()
-                    }
-                }
-            }
+            chipAnim1.onClick { viewModel.startAnim1() }
         }
     }
 
     private fun Chip.onClick(action: (View) -> Unit) {
         setOnClickListener {
+            viewModel.stopAnimations()
             applyDefaultCircleState()
             action.invoke(it)
         }
