@@ -12,23 +12,17 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.chip.Chip
 import com.skaskasian.pdpsandbox.databinding.FragmentAnimationsBinding
-import com.skaskasian.pdpsandbox.presentation.screens.animations.animdata.MyExtendedViewState
 import com.skaskasian.pdpsandbox.presentation.screens.animations.model.CircleDefaultsModel
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class AnimationsFragment : Fragment() {
+class AnimationsFragment : Fragment(), AnimationDelegate by AnimationDelegateImpl() {
 
     private var binding: FragmentAnimationsBinding? = null
 
     private val viewModel: AnimationsViewModel by lazy {
         ViewModelProvider(this)[AnimationsViewModel::class.java]
     }
-
-    private lateinit var circleDefaults: CircleDefaultsModel
-
-    private var animationJob: Job? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,10 +32,13 @@ class AnimationsFragment : Fragment() {
         return FragmentAnimationsBinding.inflate(inflater, container, false).run {
             binding = this
             circleviewCircle.doOnLayout { circle ->
-                circleDefaults = CircleDefaultsModel(
-                    positionXY = circle.x to circle.y,
-                    scaleXY = circle.scaleX to circle.scaleY,
-                    alpha = 1f
+                bindView(
+                    circle,
+                    CircleDefaultsModel(
+                        positionXY = circle.x to circle.y,
+                        scaleXY = circle.scaleX to circle.scaleY,
+                        alpha = 1f
+                    )
                 )
             }
             root
@@ -50,52 +47,14 @@ class AnimationsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.updateViewState.collectLatest { animData ->
-                    when (animData.first) {
-                        AnimType.Anim1 -> applyAnim1Value(animData.second as Float)
-                        AnimType.Anim2 -> applyAnim2Value(animData.second as Float)
-                        AnimType.Anim3 -> applyAnim3Value(animData.second as MyExtendedViewState)
-                        else -> Unit
-                    }
+                    applyAnim(animData.first, animData.second)
                 }
             }
         }
-
         applyChips()
-    }
-
-    private fun applyAnim1Value(value: Float) {
-        binding?.let { it.circleviewCircle.x += value }
-    }
-
-    private fun applyAnim2Value(value: Float) {
-        binding?.let {
-            it.circleviewCircle.scaleX += value
-            it.circleviewCircle.scaleY += value
-        }
-    }
-
-    private fun applyAnim3Value(myExtendedViewState: MyExtendedViewState) {
-        binding?.let {
-            it.circleviewCircle.alpha = myExtendedViewState.alpha
-            it.circleviewCircle.x += myExtendedViewState.positionX
-            it.circleviewCircle.scaleX += myExtendedViewState.scaleXY.first
-            it.circleviewCircle.scaleY += myExtendedViewState.scaleXY.second
-        }
-    }
-
-    private fun setDefaultCircleState() {
-        animationJob?.cancel()
-        binding?.circleviewCircle?.apply {
-            x = circleDefaults.positionXY.first
-            y = circleDefaults.positionXY.second
-            scaleX = circleDefaults.scaleXY.first
-            scaleY = circleDefaults.scaleXY.second
-            alpha = circleDefaults.alpha
-        }
     }
 
     private fun applyChips() {
@@ -110,12 +69,13 @@ class AnimationsFragment : Fragment() {
     private fun Chip.onClick(action: (View) -> Unit) {
         setOnClickListener {
             viewModel.stopAnimations()
-            setDefaultCircleState()
+            setDefaultAnimViewState()
             action.invoke(it)
         }
     }
 
     override fun onDestroy() {
+        unBindView()
         super.onDestroy()
         binding = null
     }

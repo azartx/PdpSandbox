@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
-import com.skaskasian.pdpsandbox.presentation.helloworld.HelloWorldFragment
+import com.skaskasian.pdpsandbox.presentation.screens.helloworld.HelloWorldFragment
 import com.skaskasian.pdpsandbox.presentation.screens.animations.AnimationsFragment
 import com.skaskasian.pdpsandbox.presentation.screens.contentlist.ContentListFragment
 

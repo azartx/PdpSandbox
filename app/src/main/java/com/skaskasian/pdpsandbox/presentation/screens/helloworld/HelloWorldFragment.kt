@@ -1,4 +1,4 @@
-package com.skaskasian.pdpsandbox.presentation.helloworld
+package com.skaskasian.pdpsandbox.presentation.screens.helloworld
 
 import android.annotation.SuppressLint
 import android.os.Bundle
