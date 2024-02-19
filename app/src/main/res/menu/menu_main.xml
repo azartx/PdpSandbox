@@ -12,4 +12,9 @@
         android:id="@+id/action_animation"
         android:title="Animation example"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_image_animation"
+        android:title="Image animation example"
+        app:showAsAction="never" />
 </menu>

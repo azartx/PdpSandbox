@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.skaskasian.pdpsandbox.presentation.screens.helloworld.HelloWorldFragment
 import com.skaskasian.pdpsandbox.presentation.screens.animations.AnimationsFragment
 import com.skaskasian.pdpsandbox.presentation.screens.contentlist.ContentListFragment
+import com.skaskasian.pdpsandbox.presentation.screens.drawableanimations.ImageAnimFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_pagination -> navigate<ContentListFragment>()
             R.id.action_animation -> navigate<AnimationsFragment>()
+            R.id.action_image_animation -> navigate<ImageAnimFragment>()
             else -> super.onOptionsItemSelected(item)
         }
     }
