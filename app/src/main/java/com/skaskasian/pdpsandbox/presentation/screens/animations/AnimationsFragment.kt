@@ -63,6 +63,10 @@ class AnimationsFragment : Fragment(), AnimationDelegate by AnimationDelegateImp
             chipAnim1.onClick { viewModel.startAnim1() }
             chipAnim2.onClick { viewModel.startAnim2() }
             chipAnim3.onClick { viewModel.startAnim3() }
+            chipAnim4.onClick { viewModel.startAnim4(circleviewCircle) }
+            chipAnim5.onClick { viewModel.startAnim5(circleviewCircle) }
+            chipAnim7.onClick { viewModel.startAnim7(circleviewCircle) }
+            chipAnim8.onClick { viewModel.startAnim8(circleviewCircle) }
         }
     }
 
