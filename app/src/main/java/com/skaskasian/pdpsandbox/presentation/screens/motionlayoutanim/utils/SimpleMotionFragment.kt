@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import kotlin.random.Random
 
 class SimpleMotionFragment : Fragment() {
 
@@ -19,7 +20,8 @@ class SimpleMotionFragment : Fragment() {
             layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
 
             gravity = Gravity.CENTER
-            setBackgroundColor(Color.GRAY)
+
+            setBackgroundColor(Color.rgb(Random.nextInt(256), Random.nextInt(256), Random.nextInt(256)))
             text = "Fragment ${this.hashCode()}\n\n"
                 .plus("Swipe left or right side to change current fragment!")
         }
