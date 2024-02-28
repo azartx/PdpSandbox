@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/motionlayout_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layoutDescription="@xml/motion_scene"
+    tools:showPaths="true">
+
+    <com.skaskasian.pdpsandbox.presentation.views.CircleView
+        android:id="@+id/circleview_circle"
+        android:layout_width="8dp"
+        android:layout_height="8dp" />
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

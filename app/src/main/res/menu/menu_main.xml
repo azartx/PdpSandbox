@@ -17,4 +17,9 @@
         android:id="@+id/action_image_animation"
         android:title="Image animation example"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_motion_layout"
+        android:title="Motion layout animation example"
+        app:showAsAction="never" />
 </menu>
