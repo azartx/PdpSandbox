@@ -9,6 +9,7 @@ import com.skaskasian.pdpsandbox.presentation.screens.helloworld.HelloWorldFragm
 import com.skaskasian.pdpsandbox.presentation.screens.animations.AnimationsFragment
 import com.skaskasian.pdpsandbox.presentation.screens.contentlist.ContentListFragment
 import com.skaskasian.pdpsandbox.presentation.screens.drawableanimations.ImageAnimFragment
+import com.skaskasian.pdpsandbox.presentation.screens.lottieanima.LottieAnimFragment
 import com.skaskasian.pdpsandbox.presentation.screens.motionlayoutanim.MotionLayoutAnimationFragment
 import com.skaskasian.pdpsandbox.presentation.screens.motionlayoutanim.MotionLayoutFragmentsChangingFragment
 
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
             R.id.action_image_animation -> navigate<ImageAnimFragment>()
             R.id.action_motion_layout -> navigate<MotionLayoutAnimationFragment>()
             R.id.action_motion_layout2 -> navigate<MotionLayoutFragmentsChangingFragment>()
+            R.id.action_lottie_anim -> navigate<LottieAnimFragment>()
             else -> super.onOptionsItemSelected(item)
         }
     }
