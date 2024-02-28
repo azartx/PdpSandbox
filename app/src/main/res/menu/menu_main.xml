@@ -22,4 +22,9 @@
         android:id="@+id/action_motion_layout"
         android:title="Motion layout animation example"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_motion_layout2"
+        android:title="Motion layout fragments changing"
+        app:showAsAction="never" />
 </menu>

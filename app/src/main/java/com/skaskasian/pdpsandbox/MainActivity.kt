@@ -10,6 +10,7 @@ import com.skaskasian.pdpsandbox.presentation.screens.animations.AnimationsFragm
 import com.skaskasian.pdpsandbox.presentation.screens.contentlist.ContentListFragment
 import com.skaskasian.pdpsandbox.presentation.screens.drawableanimations.ImageAnimFragment
 import com.skaskasian.pdpsandbox.presentation.screens.motionlayoutanim.MotionLayoutAnimationFragment
+import com.skaskasian.pdpsandbox.presentation.screens.motionlayoutanim.MotionLayoutFragmentsChangingFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
             R.id.action_animation -> navigate<AnimationsFragment>()
             R.id.action_image_animation -> navigate<ImageAnimFragment>()
             R.id.action_motion_layout -> navigate<MotionLayoutAnimationFragment>()
+            R.id.action_motion_layout2 -> navigate<MotionLayoutFragmentsChangingFragment>()
             else -> super.onOptionsItemSelected(item)
         }
     }

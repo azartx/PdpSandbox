@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/state_left"
+        motion:constraintSetStart="@+id/state_default"
+        motion:duration="300">
+
+        <OnSwipe
+            motion:dragDirection="dragLeft"
+            motion:onTouchUp="autoComplete"
+            motion:touchAnchorId="@id/fragment_container_motion_fragment"
+            motion:touchAnchorSide="left"
+            motion:touchRegionId="@id/fragment_container_motion_fragment" />
+    </Transition>
+
+    <Transition
+        motion:constraintSetEnd="@+id/state_right"
+        motion:constraintSetStart="@+id/state_default"
+        motion:duration="300">
+
+        <OnSwipe
+            motion:dragDirection="dragRight"
+            motion:onTouchUp="autoComplete"
+            motion:touchAnchorId="@+id/fragment_container_motion_fragment"
+            motion:touchAnchorSide="right"
+            motion:touchRegionId="@id/fragment_container_motion_fragment" />
+    </Transition>
+
+    <Transition
+        motion:autoTransition="animateToEnd"
+        motion:constraintSetEnd="@+id/state_gone_left"
+        motion:constraintSetStart="@+id/state_left"
+        motion:duration="300" />
+
+    <Transition
+        motion:autoTransition="animateToEnd"
+        motion:constraintSetEnd="@+id/state_gone_right"
+        motion:constraintSetStart="@+id/state_right"
+        motion:duration="300" />
+
+    <Transition
+        motion:autoTransition="jumpToEnd"
+        motion:constraintSetEnd="@+id/state_default"
+        motion:constraintSetStart="@+id/state_gone_left" />
+
+    <Transition
+        motion:autoTransition="jumpToEnd"
+        motion:constraintSetEnd="@+id/state_default"
+        motion:constraintSetStart="@+id/state_gone_right" />
+
+    <ConstraintSet android:id="@+id/state_default">
+
+        <Constraint
+            android:id="@id/fragment_container_motion_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="50dp"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent" />
+    </ConstraintSet>
+
+    <ConstraintSet
+        android:id="@+id/state_left"
+        motion:deriveConstraintsFrom="@+id/state_default">
+
+        <Constraint
+            android:id="@id/fragment_container_motion_fragment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="80dp"
+            android:layout_marginEnd="200dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="20dp"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintWidth_percent="0.7" />
+    </ConstraintSet>
+
+    <ConstraintSet
+        android:id="@+id/state_right"
+        motion:deriveConstraintsFrom="@id/state_default">
+
+        <Constraint
+            android:id="@id/fragment_container_motion_fragment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="80dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="200dp"
+            android:layout_marginTop="20dp"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintWidth_percent="0.7" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/state_gone_right">
+
+        <Constraint
+            android:id="@id/fragment_container_motion_fragment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="80dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginTop="20dp"
+            motion:layout_constraintStart_toEndOf="parent"
+            motion:layout_constraintWidth_percent="0.9" />
+
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/state_gone_left">
+
+        <Constraint
+            android:id="@id/fragment_container_motion_fragment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="80dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginTop="20dp"
+            motion:layout_constraintEnd_toStartOf="parent"
+            motion:layout_constraintWidth_percent="0.9" />
+
+    </ConstraintSet>
+
+</MotionScene>
