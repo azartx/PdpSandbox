@@ -32,4 +32,9 @@
         android:id="@+id/action_lottie_anim"
         android:title="Lottie animations"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_patterns"
+        android:title="Design Patterns"
+        app:showAsAction="never" />
 </menu>

@@ -64,6 +64,7 @@ dependencies {
     implementation(libs.google.material)
     implementation(libs.paging.common)
     implementation(libs.airbnb.lottie)
+    implementation(libs.bumptech.glide)
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

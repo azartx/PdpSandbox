@@ -12,6 +12,7 @@ import com.skaskasian.pdpsandbox.presentation.screens.drawableanimations.ImageAn
 import com.skaskasian.pdpsandbox.presentation.screens.lottieanima.LottieAnimFragment
 import com.skaskasian.pdpsandbox.presentation.screens.motionlayoutanim.MotionLayoutAnimationFragment
 import com.skaskasian.pdpsandbox.presentation.screens.motionlayoutanim.MotionLayoutFragmentsChangingFragment
+import com.skaskasian.pdpsandbox.presentation.screens.patterns.PatternsFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,6 +40,7 @@ class MainActivity : AppCompatActivity() {
             R.id.action_motion_layout -> navigate<MotionLayoutAnimationFragment>()
             R.id.action_motion_layout2 -> navigate<MotionLayoutFragmentsChangingFragment>()
             R.id.action_lottie_anim -> navigate<LottieAnimFragment>()
+            R.id.action_patterns -> navigate<PatternsFragment>()
             else -> super.onOptionsItemSelected(item)
         }
     }
