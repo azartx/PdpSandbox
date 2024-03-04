@@ -24,6 +24,8 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+
+        buildConfigField("boolean", "IS_COMMANDS_SPAMMING_ENABLED", "true")
     }
 
     flavorDimensions += "app"

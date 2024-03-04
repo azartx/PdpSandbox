@@ -63,6 +63,7 @@ class AndroidAppPlugin : Plugin<Project> {
                 }
                 buildFeatures {
                     viewBinding = true
+                    buildConfig = true
                 }
             }
     }
