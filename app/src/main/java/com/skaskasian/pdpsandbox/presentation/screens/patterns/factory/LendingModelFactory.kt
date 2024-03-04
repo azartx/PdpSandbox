@@ -5,6 +5,13 @@ import com.skaskasian.pdpsandbox.utils.cloneTimes
 
 class LendingModelFactory {
 
+    private var index: Int = 0
+        get() {
+            val result = field.takeIf { it < 10 } ?: 0
+            field = if ((field + 1) >= 10) result else field + 1
+            return result
+        }
+
     private val titles = listOf(
         "Some title 1",
         "Some title 2",
@@ -45,10 +52,12 @@ class LendingModelFactory {
     )
 
     fun createRandomLanding(): LandingModel {
+        val _index = index
         return LandingModel(
-            imageUrl = imageUrls.random(),
-            title = titles.random(),
-            description = descriptions.random()
+            id = _index,
+            imageUrl = imageUrls[_index],
+            title = titles[_index],
+            description = descriptions[_index]
         )
     }
 }

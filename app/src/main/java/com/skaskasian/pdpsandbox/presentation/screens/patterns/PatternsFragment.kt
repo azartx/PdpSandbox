@@ -1,5 +1,7 @@
 package com.skaskasian.pdpsandbox.presentation.screens.patterns
 
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +15,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.skaskasian.pdpsandbox.databinding.FragmentPatternsBinding
-import com.skaskasian.pdpsandbox.presentation.screens.patterns.model.LandingModel
 import com.skaskasian.pdpsandbox.presentation.screens.patterns.state.PatternsScreenState
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -44,12 +45,13 @@ class PatternsFragment : Fragment(), StringSkeletonDelegate by StringSkeletonDel
         }
 
         binding?.fabUpdatePage?.setOnClickListener { viewModel.onRefreshLandingClicked() }
+        binding?.fabLike?.setOnClickListener { viewModel.onLikeButtonClicked() }
     }
 
     private fun onScreenStateReceived(state: PatternsScreenState) {
         when (state) {
             is PatternsScreenState.Loading -> showLoadingState()
-            is PatternsScreenState.Content -> showScreenContent(state.screenModel)
+            is PatternsScreenState.Content -> showScreenContent(state)
             is PatternsScreenState.Error -> showErrorState(state.message)
         }
     }
@@ -58,13 +60,19 @@ class PatternsFragment : Fragment(), StringSkeletonDelegate by StringSkeletonDel
         applyTextSkeletons()
     }
 
-    private fun showScreenContent(content: LandingModel) {
+    private fun showScreenContent(content: PatternsScreenState.Content) {
         dismissTextSkeletons()
 
         binding?.apply {
-            textviewTitle.text = content.title
-            textviewContent.text = content.description
-            glide.load(content.imageUrl).into(imageviewHeader)
+            textviewTitle.text = content.screenModel.title
+            textviewContent.text = content.screenModel.description
+            if (content.isLiked) {
+                fabLike.drawable.setColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY )
+            } else {
+                fabLike.drawable.setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY )
+            }
+
+            glide.load(content.screenModel.imageUrl).into(imageviewHeader)
         }
     }
 

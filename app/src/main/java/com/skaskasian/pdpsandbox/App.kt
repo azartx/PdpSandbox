@@ -8,11 +8,13 @@ class App : Application() {
 
     companion object {
 
+        lateinit var app: App
         lateinit var contentDao: ContentDao
     }
 
     override fun onCreate() {
         super.onCreate()
+        app = this
         contentDao = ContentDatabase.create(this).contentDao
     }
 }
