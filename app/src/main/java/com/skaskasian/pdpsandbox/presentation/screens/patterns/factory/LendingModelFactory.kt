@@ -3,6 +3,11 @@ package com.skaskasian.pdpsandbox.presentation.screens.patterns.factory
 import com.skaskasian.pdpsandbox.presentation.screens.patterns.model.LandingModel
 import com.skaskasian.pdpsandbox.utils.cloneTimes
 
+/* Фабричный метод. Класс, который создаёт новый инстанс LandingModel объекта
+*
+*  Позволяет скрыть за собой сборку объекта.
+*  Даёт возможность разбивать реализации на отдельные классы, которые можно отдельно тестировать.
+*  */
 class LendingModelFactory {
 
     private var index: Int = 0

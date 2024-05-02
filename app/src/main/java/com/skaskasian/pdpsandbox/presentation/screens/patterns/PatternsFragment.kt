@@ -19,7 +19,7 @@ import com.skaskasian.pdpsandbox.presentation.screens.patterns.state.PatternsScr
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-// Декоратор в виде делегата для анимирования скелетона текста
+// Декоратор в виде делегата для анимирования скелетона текста.
 class PatternsFragment : Fragment(), StringSkeletonDelegate by StringSkeletonDelegateImpl() {
 
     private var binding: FragmentPatternsBinding? = null

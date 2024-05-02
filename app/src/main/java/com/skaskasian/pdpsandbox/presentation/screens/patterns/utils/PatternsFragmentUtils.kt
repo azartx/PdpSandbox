@@ -3,6 +3,13 @@ package com.skaskasian.pdpsandbox.presentation.screens.patterns.utils
 import java.util.Calendar
 import java.util.Locale
 
+/*
+* Паттерн Одиночка.
+*
+* Есть только один инстанс класса.
+*
+* Используется если нужно чтобы был только один экземпляр класса в рамках скоупа/жизни приложения.
+* */
 class PatternsFragmentUtils private constructor() {
 
     companion object {

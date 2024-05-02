@@ -13,6 +13,7 @@ data class LandingModel(
     val description: String
 ) {
 
+    /* Реализация паттерна Builder */
     class Builder {
 
         private var _id: Int = 11
