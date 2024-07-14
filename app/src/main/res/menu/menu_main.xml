@@ -37,4 +37,9 @@
         android:id="@+id/action_patterns"
         android:title="Design Patterns"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_algos"
+        android:title="Algorythms examples"
+        app:showAsAction="never" />
 </menu>

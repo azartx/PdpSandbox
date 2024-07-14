@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
+import com.skaskasian.pdpsandbox.presentation.screens.algo.AlgoFragment
 import com.skaskasian.pdpsandbox.presentation.screens.helloworld.HelloWorldFragment
 import com.skaskasian.pdpsandbox.presentation.screens.animations.AnimationsFragment
 import com.skaskasian.pdpsandbox.presentation.screens.contentlist.ContentListFragment
@@ -45,6 +46,7 @@ class MainActivity : AppCompatActivity() {
             R.id.action_motion_layout2 -> navigate<MotionLayoutFragmentsChangingFragment>()
             R.id.action_lottie_anim -> navigate<LottieAnimFragment>()
             R.id.action_patterns -> navigate<PatternsFragment>()
+            R.id.action_algos -> navigate<AlgoFragment>()
             else -> super.onOptionsItemSelected(item)
         }
     }
