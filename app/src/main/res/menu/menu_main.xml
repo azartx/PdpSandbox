@@ -42,4 +42,9 @@
         android:id="@+id/action_algos"
         android:title="Algorythms examples"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_custom_views"
+        android:title="Custom view examples"
+        app:showAsAction="never" />
 </menu>

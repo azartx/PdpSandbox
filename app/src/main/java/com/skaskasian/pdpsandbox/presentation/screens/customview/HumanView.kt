@@ -1,11 +1,11 @@
 package com.skaskasian.pdpsandbox.presentation.screens.customview
 
-import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
+import android.view.Choreographer
 import android.view.View
 
 class HumanView
@@ -14,42 +14,31 @@ class HumanView
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
     defStyleRes: Int = 0
-) : View(context, attrs, defStyleAttr, defStyleRes) {
+) : View(context, attrs, defStyleAttr, defStyleRes), Choreographer.FrameCallback {
 
     private val painter: Paint by lazy { Paint().apply { color = Color.WHITE } }
 
+    private val choreographer: Choreographer by lazy { Choreographer.getInstance() }
+
     private var handWaveValue = 1f
 
-    init {
-        applyHandWave()
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        choreographer.postFrameCallback(this)
     }
 
-    private fun applyHandWave() {
-        val animator = ValueAnimator.ofInt(0, 100)
-        animator.setDuration(2000)
-        animator.repeatCount = -1
-        animator.addUpdateListener {
-            if (handWaveValue > 120) {
-                handWaveValue = (-1f)
-                return@addUpdateListener
-            }
-            if (handWaveValue < -120) {
-                handWaveValue = 1f
-
-                return@addUpdateListener
-            }
-
-            if (handWaveValue > 0f) {
-                handWaveValue += 1f
-            }
-            if (handWaveValue < 0f) {
-                handWaveValue -= 1f
-            }
-            invalidate()
-        }
-        animator.start()
+    override fun doFrame(frameTimeNanos: Long) {
+        changeHandWaveState()
+        invalidate()
+        choreographer.postFrameCallback(this)
     }
 
+    override fun onDetachedFromWindow() {
+        choreographer.removeFrameCallback(this)
+        super.onDetachedFromWindow()
+    }
+
+    // TODO calculate default positions in onMeasure
     override fun onDraw(canvas: Canvas) {
         val centerX = width / 2f
 
@@ -74,5 +63,22 @@ class HumanView
         val rightFeetX = centerX + headRadius
         canvas.drawLine(centerX, bodyStopY, leftFeetX, feetStopY, painter)
         canvas.drawLine(centerX, bodyStopY, rightFeetX, feetStopY, painter)
+    }
+
+    // TODO update method, calculate correct hand waving
+    private fun changeHandWaveState() {
+        if (handWaveValue > 120f) {
+            handWaveValue = (-1f)
+        }
+        if (handWaveValue < -120f) {
+            handWaveValue = 1f
+        }
+
+        if (handWaveValue > 0f) {
+            handWaveValue += 1f
+        }
+        if (handWaveValue < 0f) {
+            handWaveValue -= 1f
+        }
     }
 }
