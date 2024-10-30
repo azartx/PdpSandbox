@@ -20,7 +20,7 @@ class HumanView
 
     private val choreographer: Choreographer by lazy { Choreographer.getInstance() }
 
-    private var handWaveValue = 1f
+    private var handWaveState: HandWaveState = HandWaveState(handWaveValue = 0f, HandWaveDirection.UP)
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
@@ -51,9 +51,9 @@ class HumanView
 
         val handsStopY = neckStopY + ((neckStopY - neckStartY) * 3f)
         val leftHandX = centerX - headRadius
-        val rightHandX = centerX + headRadius + handWaveValue
+        val rightHandX = centerX + headRadius + handWaveState.handWaveValue
         canvas.drawLine(centerX, neckStopY, leftHandX, handsStopY, painter)
-        canvas.drawLine(centerX, neckStopY, rightHandX, handsStopY, painter)
+        canvas.drawLine(centerX, neckStopY, rightHandX, handsStopY - handWaveState.handWaveValue, painter)
 
         val bodyStopY = neckStopY + ((neckStopY - neckStartY) * 4f)
         canvas.drawLine(centerX, neckStopY, centerX, bodyStopY, painter)
@@ -65,20 +65,30 @@ class HumanView
         canvas.drawLine(centerX, bodyStopY, rightFeetX, feetStopY, painter)
     }
 
-    // TODO update method, calculate correct hand waving
     private fun changeHandWaveState() {
-        if (handWaveValue > 120f) {
-            handWaveValue = (-1f)
-        }
-        if (handWaveValue < -120f) {
-            handWaveValue = 1f
-        }
-
-        if (handWaveValue > 0f) {
-            handWaveValue += 1f
-        }
-        if (handWaveValue < 0f) {
-            handWaveValue -= 1f
+        if (handWaveState.handWaveDirection == HandWaveDirection.UP) {
+            val newValue = handWaveState.handWaveValue + 1f
+            handWaveState = if (newValue >= 120) {
+                handWaveState.copy(handWaveDirection = HandWaveDirection.DOWN)
+            } else {
+                handWaveState.copy(handWaveValue = newValue)
+            }
+        } else {
+            val newValue = handWaveState.handWaveValue - 1f
+            handWaveState = if (newValue <= 0) {
+                handWaveState.copy(handWaveDirection = HandWaveDirection.UP)
+            } else {
+                handWaveState.copy(handWaveValue = newValue)
+            }
         }
     }
+}
+
+private data class HandWaveState(
+    val handWaveValue: Float,
+    val handWaveDirection: HandWaveDirection
+)
+
+private enum class HandWaveDirection {
+    UP, DOWN
 }
