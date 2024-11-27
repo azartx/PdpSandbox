@@ -46,7 +46,6 @@ class ContentListFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.CREATED) {
                 launch { viewModel.content.collectLatest(contentAdapter::submitData) }
                 launch { contentAdapter.loadStateFlow.collectLatest(::applyState) }
-
             }
         }
     }
