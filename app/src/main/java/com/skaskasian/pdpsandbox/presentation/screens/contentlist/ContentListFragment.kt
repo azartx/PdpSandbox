@@ -23,6 +23,7 @@ import com.skaskasian.pdpsandbox.utils.errorOrNull
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+/*todo*/
 // по паттернам, append и refresh - они немного для разных целей) давай немного потренируемся:
 // 1. сделай так, чтобы если отвалился запрос на какой-нибудь не первой странице,
 // то у пользователя появилась возможность попробовать догрузить проблемную страницу еще раз,
