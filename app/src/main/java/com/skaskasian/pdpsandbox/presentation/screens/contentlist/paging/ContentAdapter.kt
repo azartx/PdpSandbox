@@ -6,7 +6,9 @@ import androidx.paging.PagingDataAdapter
 import com.skaskasian.pdpsandbox.data.model.Content
 import com.skaskasian.pdpsandbox.databinding.ItemContentBinding
 
-class ContentAdapter : PagingDataAdapter<Content, ContentViewHolder>(AdapterDiffUtil()) {
+class ContentAdapter(
+    private val onItemClickListener: (Content) -> Unit
+) : PagingDataAdapter<Content, ContentViewHolder>(AdapterDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContentViewHolder {
         return ContentViewHolder(
@@ -19,6 +21,9 @@ class ContentAdapter : PagingDataAdapter<Content, ContentViewHolder>(AdapterDiff
     }
 
     override fun onBindViewHolder(holder: ContentViewHolder, position: Int) {
-        holder.bind(getItem(position) ?: return)
+        holder.bind(
+            contentItem = getItem(position) ?: return,
+            onClick = onItemClickListener
+        )
     }
 }

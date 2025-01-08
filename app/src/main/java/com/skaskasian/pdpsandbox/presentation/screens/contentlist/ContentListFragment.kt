@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -13,11 +14,19 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
+import com.skaskasian.pdpsandbox.R
+import com.skaskasian.pdpsandbox.data.model.Content
 import com.skaskasian.pdpsandbox.databinding.FragmentContentListBinding
+import com.skaskasian.pdpsandbox.presentation.screens.contentlist.details.ContentDetailsFragment
 import com.skaskasian.pdpsandbox.presentation.screens.contentlist.paging.ContentAdapter
 import com.skaskasian.pdpsandbox.utils.errorOrNull
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+
+// по паттернам, append и refresh - они немного для разных целей) давай немного потренируемся:
+// 1. сделай так, чтобы если отвалился запрос на какой-нибудь не первой странице,
+// то у пользователя появилась возможность попробовать догрузить проблемную страницу еще раз,
+// а если отвалилась именно первая страница, то пусть будет так, как ты сделал на данный момент
 
 class ContentListFragment : Fragment() {
 
@@ -28,7 +37,7 @@ class ContentListFragment : Fragment() {
         ViewModelProvider(this, ContentListViewModelFactory())[ContentListViewModel::class.java]
     }
 
-    private val contentAdapter: ContentAdapter by lazy { ContentAdapter() }
+    private val contentAdapter: ContentAdapter by lazy { ContentAdapter(::onContentItemClick) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +57,17 @@ class ContentListFragment : Fragment() {
                 launch { contentAdapter.loadStateFlow.collectLatest(::applyState) }
             }
         }
+    }
+
+    private fun onContentItemClick(content: Content) {
+        parentFragmentManager.beginTransaction()
+            .replace(
+                R.id.fragment_container_main,
+                ContentDetailsFragment::class.java,
+                bundleOf(ContentDetailsFragment.CONTENT_DETAILS_KEY to content)
+            )
+            .addToBackStack(ContentDetailsFragment::class.java.simpleName)
+            .commit()
     }
 
     private fun applyState(loadStates: CombinedLoadStates) {

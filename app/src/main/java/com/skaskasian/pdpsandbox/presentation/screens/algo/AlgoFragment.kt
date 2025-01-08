@@ -26,7 +26,7 @@ class AlgoFragment : Fragment() {
         ViewModelProvider(this, AlgoViewModelFactory())[AlgoViewModel::class.java]
     }
 
-    private val contentAdapter: ContentAdapter by lazy { ContentAdapter() }
+    private val contentAdapter: ContentAdapter by lazy { ContentAdapter({/*TODO*/}) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

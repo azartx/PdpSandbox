@@ -4,8 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import androidx.activity.addCallback
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import com.google.android.material.appbar.MaterialToolbar
 import com.skaskasian.pdpsandbox.presentation.screens.algo.AlgoFragment
 import com.skaskasian.pdpsandbox.presentation.screens.helloworld.HelloWorldFragment
 import com.skaskasian.pdpsandbox.presentation.screens.animations.AnimationsFragment
@@ -26,14 +27,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupViews(isConfigurationChanged: Boolean) {
         setContentView(R.layout.activity_main)
-        setSupportActionBar(findViewById(R.id.toolbar))
+
+        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
         if (!isConfigurationChanged) {
-            showInitialFragment()
+            showInitialFragment(toolbar)
         }
     }
 
-    private fun showInitialFragment() {
+    private fun showInitialFragment(toolbar: Toolbar) {
+        toolbar.setNavigationOnClickListener { supportFragmentManager.popBackStack() }
         supportFragmentManager.beginTransaction()
             .add(R.id.fragment_container_main, HelloWorldFragment::class.java, null)
             .addToBackStack(ContentListFragment::class.java.simpleName)
