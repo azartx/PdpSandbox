@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import com.skaskasian.pdpsandbox.presentation.screens.algo.AlgoFragment
 import com.skaskasian.pdpsandbox.presentation.screens.helloworld.HelloWorldFragment
@@ -20,13 +21,19 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupViews()
+        setupViews(isConfigurationChanged = savedInstanceState != null)
     }
 
-    private fun setupViews() {
+    private fun setupViews(isConfigurationChanged: Boolean) {
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
+        if (!isConfigurationChanged) {
+            showInitialFragment()
+        }
+    }
+
+    private fun showInitialFragment() {
         supportFragmentManager.beginTransaction()
             .add(R.id.fragment_container_main, HelloWorldFragment::class.java, null)
             .addToBackStack(ContentListFragment::class.java.simpleName)

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.skaskasian.pdpsandbox.App
 import com.skaskasian.pdpsandbox.data.repository.ContentRepository
 import com.skaskasian.pdpsandbox.presentation.screens.contentlist.paging.ContentPagingSource
@@ -22,6 +23,7 @@ class ContentListViewModel(
     )
         .flow
         .stateIn(viewModelScope, SharingStarted.Lazily, PagingData.empty())
+        .cachedIn(viewModelScope)
 }
 
 @Suppress("UNCHECKED_CAST")
