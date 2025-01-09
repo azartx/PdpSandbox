@@ -13,12 +13,19 @@ import com.skaskasian.pdpsandbox.presentation.screens.contentlist.paging.Content
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 
+private const val PAGE_SIZE = 20
+private const val PREFETCH_DISTANCE = 5
+
 class ContentListViewModel(
     private val contentRepository: ContentRepository
 ) : ViewModel() {
 
     val content = Pager(
-        config = PagingConfig(pageSize = 20),
+        config = PagingConfig(
+            pageSize = PAGE_SIZE,
+            initialLoadSize = PAGE_SIZE,
+            prefetchDistance = PREFETCH_DISTANCE
+        ),
         pagingSourceFactory = { ContentPagingSource(contentRepository) }
     )
         .flow

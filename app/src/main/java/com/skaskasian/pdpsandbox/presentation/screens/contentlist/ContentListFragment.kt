@@ -19,15 +19,10 @@ import com.skaskasian.pdpsandbox.data.model.Content
 import com.skaskasian.pdpsandbox.databinding.FragmentContentListBinding
 import com.skaskasian.pdpsandbox.presentation.screens.contentlist.details.ContentDetailsFragment
 import com.skaskasian.pdpsandbox.presentation.screens.contentlist.paging.ContentAdapter
+import com.skaskasian.pdpsandbox.presentation.screens.contentlist.paging.FooterLoadStateAdapter
 import com.skaskasian.pdpsandbox.utils.errorOrNull
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-
-/*todo*/
-// по паттернам, append и refresh - они немного для разных целей) давай немного потренируемся:
-// 1. сделай так, чтобы если отвалился запрос на какой-нибудь не первой странице,
-// то у пользователя появилась возможность попробовать догрузить проблемную страницу еще раз,
-// а если отвалилась именно первая страница, то пусть будет так, как ты сделал на данный момент
 
 class ContentListFragment : Fragment() {
 
@@ -50,7 +45,10 @@ class ContentListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.recyclerContentList.adapter = contentAdapter
+        binding.recyclerContentList.adapter = contentAdapter.withLoadStateFooter(
+            FooterLoadStateAdapter(contentAdapter::retry)
+        )
+        binding.buttonRetry.setOnClickListener { contentAdapter.refresh() }
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.CREATED) {
@@ -72,9 +70,10 @@ class ContentListFragment : Fragment() {
     }
 
     private fun applyState(loadStates: CombinedLoadStates) {
-        val hasError = loadStates.refresh is LoadState.Error || loadStates.append is LoadState.Error
+        val hasError = loadStates.refresh is LoadState.Error
         binding.recyclerContentList.isVisible = !hasError
         binding.textviewError.isVisible = hasError
+        binding.buttonRetry.isVisible = hasError
 
         if (hasError) {
             val errorMsg = (loadStates.refresh.errorOrNull()
