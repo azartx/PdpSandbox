@@ -1,5 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 pluginManagement {
     includeBuild("build-src")
     repositories {
@@ -17,4 +19,6 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "PdpSandbox"
+include(":sandbox_compiler_plugin")
+
 include(":app")

@@ -1,6 +1,5 @@
 import com.android.build.api.variant.FilterConfiguration.FilterType
 import com.android.build.gradle.internal.tasks.factory.dependsOn
-import org.jetbrains.kotlin.incremental.createDirectory
 import java.util.Calendar
 import com.skaskasian.buildlogic.applyAndroidxDependencies
 import com.skaskasian.buildlogic.applyRoom
@@ -62,11 +61,15 @@ android {
 dependencies {
 
     applyAndroidxDependencies()
+
     applyRoom(project)
     implementation(libs.google.material)
     implementation(libs.paging.common)
     implementation(libs.airbnb.lottie)
     implementation(libs.bumptech.glide)
+
+    kotlinCompilerPluginClasspath(projects.sandboxCompilerPlugin)
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -78,7 +81,7 @@ val createFlavourTimestampReportTask: TaskProvider<Task> = tasks.register("creat
         val reportFolder =
             File("$rootDir/app/flavoursreport/${currentFlavour.name}", "report.txt")
 
-        if (!reportFolder.parentFile.exists()) reportFolder.parentFile.createDirectory()
+        if (!reportFolder.parentFile.exists()) reportFolder.parentFile.mkdir()
         if (!reportFolder.exists()) reportFolder.createNewFile()
 
         reportFolder.writeText("Last usage in millis: ${Calendar.getInstance().time}")
