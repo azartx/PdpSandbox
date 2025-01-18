@@ -60,6 +60,8 @@ android {
 
 dependencies {
 
+    implementation(projects.simpleFeature)
+
     applyAndroidxDependencies()
 
     applyRoom(project)
