@@ -34,3 +34,4 @@ kotlin-gradlePlugin = { id = "org.jetbrains.kotlin:kotlin-gradle-plugin", versio
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-android" }
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "google-ksp" }
 pdpsandbox-androidAppPlugin = { id = "android-app-plugin" }
+android-library = { id = "com.android.library", version.ref = "android-agp" }
