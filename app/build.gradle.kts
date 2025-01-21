@@ -9,6 +9,7 @@ plugins {
     kotlin("android")
     alias(libs.plugins.google.ksp)
     id(libs.plugins.pdpsandbox.androidAppPlugin.get().pluginId)
+    id("kotlin-parcelize")
 }
 
 applyAppName {
