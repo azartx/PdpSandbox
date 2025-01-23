@@ -12,7 +12,7 @@ import com.skaskasian.pdpsandbox.presentation.screens.helloworld.HelloWorldFragm
 import com.skaskasian.pdpsandbox.presentation.screens.animations.AnimationsFragment
 import com.skaskasian.pdpsandbox.presentation.screens.contentlist.ContentListFragment
 import com.skaskasian.pdpsandbox.presentation.screens.drawableanimations.ImageAnimFragment
-import com.skaskasian.pdpsandbox.presentation.screens.helloworld.CustomViewsFragmentFragment
+import com.skaskasian.pdpsandbox.presentation.screens.customview.CustomViewsFragment
 import com.skaskasian.pdpsandbox.presentation.screens.lottieanima.LottieAnimFragment
 import com.skaskasian.pdpsandbox.presentation.screens.motionlayoutanim.MotionLayoutAnimationFragment
 import com.skaskasian.pdpsandbox.presentation.screens.motionlayoutanim.MotionLayoutFragmentsChangingFragment
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
             R.id.action_lottie_anim -> navigate<LottieAnimFragment>()
             R.id.action_patterns -> navigate<PatternsFragment>()
             R.id.action_algos -> navigate<AlgoFragment>()
-            R.id.action_custom_views -> navigate<CustomViewsFragmentFragment>()
+            R.id.action_custom_views -> navigate<CustomViewsFragment>()
             else -> super.onOptionsItemSelected(item)
         }
     }

@@ -25,6 +25,10 @@ class HumanView
         super.onDetachedFromWindow()
     }
 
+    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+        dispatchOnLayout(changed, left, top, right, bottom)
+    }
+
     override fun onDraw(canvas: Canvas) {
         dispatchOnDraw(canvas)
     }
@@ -36,5 +40,9 @@ class HumanView
     override fun onRestoreInstanceState(state: Parcelable?) {
         super.onRestoreInstanceState(state)
         dispatchOnRestoreInstantState(state)
+    }
+
+    fun sayHello(onEnd: () -> Unit) {
+        dispatchSayHello(onEnd)
     }
 }
