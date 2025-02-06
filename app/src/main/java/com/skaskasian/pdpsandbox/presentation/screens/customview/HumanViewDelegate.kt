@@ -1,22 +1,28 @@
 package com.skaskasian.pdpsandbox.presentation.screens.customview
 
+import android.animation.ValueAnimator
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Picture
 import android.os.Parcelable
-import android.view.Choreographer
 import android.view.View
+import androidx.core.animation.doOnEnd
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.record
 import com.skaskasian.pdpsandbox.R
 import com.skaskasian.pdpsandbox.presentation.screens.customview.model.HandWaveDirection
 import com.skaskasian.pdpsandbox.presentation.screens.customview.model.HandWaveState
 import com.skaskasian.pdpsandbox.presentation.screens.customview.model.SavedState
 import kotlin.math.PI
+import kotlin.math.cos
+import kotlin.math.sin
 
-private const val HAND_WAVES_MAX = 3
+private const val HAND_WAVES_DURATION_MILLIS = 800L
+private const val HAND_WAVES_MAX_THREE = 2
 private const val DESIRED_SPEED_IN_SEC = 200
 private const val STANDARD_DENSITY = 160f
 
-interface HumanViewDelegate<V : View> : Choreographer.FrameCallback {
+interface HumanViewDelegate<V : View> {
 
     fun bindDelegate(view: V)
     fun unbindDelegate()
@@ -30,26 +36,46 @@ interface HumanViewDelegate<V : View> : Choreographer.FrameCallback {
     fun dispatchSayHello(onEnd: () -> Unit)
 }
 
-class HumanViewDelegateImpl : HumanViewDelegate<HumanView> {
+class HumanViewDelegateImpl : HumanViewDelegate<HumanView>, ValueAnimator.AnimatorUpdateListener {
 
     private var _view: HumanView? = null
     private val view: HumanView; get() = _view!!
 
-    private val choreographer: Choreographer by lazy { Choreographer.getInstance() }
+    private var animator: ValueAnimator? = null
+    private var humanPictureWithoutRightHand: Picture? = null
 
-    private val painter: Paint by lazy {
+    private val headPaint: Paint by lazy {
         Paint().apply {
             color = ResourcesCompat.getColor(
                 view.resources,
-                R.color.colorSecondary,
+                R.color.gray,
+                view.context.theme
+            )
+        }
+    }
+
+    private val bodyPaint: Paint by lazy {
+        Paint().apply {
+            color = ResourcesCompat.getColor(
+                view.resources,
+                R.color.blue,
+                view.context.theme
+            )
+            strokeWidth = 3f
+        }
+    }
+
+    private val handsFeetNeckPaint: Paint by lazy {
+        Paint().apply {
+            color = ResourcesCompat.getColor(
+                view.resources,
+                R.color.body,
                 view.context.theme
             )
         }
     }
 
     private var handWaveState = HandWaveState(handWaveValue = 0f, HandWaveDirection.UP)
-    private var isHandWaveActivated: Boolean = false
-    private var handWavesCont: Int = 0
     private var onHandWaveEndedCallback: (() -> Unit)? = null
 
     private var speedPxPerSec: Float = 0f
@@ -60,10 +86,13 @@ class HumanViewDelegateImpl : HumanViewDelegate<HumanView> {
     private var neckStopY: Float = 0f
     private var handsStopY: Float = 0f
     private var leftHandX: Float = 0f
+    private var rightHandY: Float = 0f
     private var bodyStopY: Float = 0f
     private var feetStopY: Float = 0f
     private var leftFeetX: Float = 0f
     private var rightFeetX: Float = 0f
+    private var armAngle = 0f
+    private val rightAngle: Float; get() = 0 - armAngle
 
     override fun bindDelegate(view: HumanView) {
         this._view = view
@@ -71,18 +100,10 @@ class HumanViewDelegateImpl : HumanViewDelegate<HumanView> {
 
     override fun unbindDelegate() {
         onHandWaveEndedCallback = null
-        choreographer.removeFrameCallback(this)
+        animator?.removeUpdateListener(this)
+        animator?.cancel()
+        animator = null
         _view = null
-    }
-
-    override fun doFrame(frameTimeNanos: Long) {
-        if (isHandWaveActivated) {
-            changeHandWaveState()
-            view.invalidate()
-            choreographer.postFrameCallback(this)
-        } else {
-            choreographer.removeFrameCallback(this)
-        }
     }
 
     override fun dispatchOnLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
@@ -93,6 +114,7 @@ class HumanViewDelegateImpl : HumanViewDelegate<HumanView> {
         neckStopY = neckStartY + (headRadius / 1.5f)
         handsStopY = neckStopY + ((neckStopY - neckStartY) * 3f)
         leftHandX = centerX - headRadius
+        rightHandY = handsStopY
         bodyStopY = neckStopY + ((neckStopY - neckStartY) * 4f)
         feetStopY = bodyStopY + ((neckStopY - neckStartY) * 3f)
         leftFeetX = centerX - headRadius
@@ -103,62 +125,29 @@ class HumanViewDelegateImpl : HumanViewDelegate<HumanView> {
     }
 
     override fun dispatchOnDraw(canvas: Canvas) {
-        val rightHandX = centerX + headRadius + handWaveState.handWaveValue
-        val rightHandY = handsStopY - handWaveState.handWaveValue
+        humanPictureWithoutRightHand?.draw(canvas) ?: apply {
+            humanPictureWithoutRightHand = Picture().record(view.width, view.height) {
+                // head
+                drawCircle(centerX, headRadius, headRadius, headPaint)
 
-        // head
-        canvas.drawCircle(centerX, headRadius, headRadius, painter)
+                // neck
+                drawLine(centerX, neckStartY, centerX, neckStopY, handsFeetNeckPaint)
 
-        // neck
-        canvas.drawLine(centerX, neckStartY, centerX, neckStopY, painter)
+                // left hand
+                drawLine(centerX, neckStopY, leftHandX, handsStopY, handsFeetNeckPaint)
 
-        // hands
-        canvas.drawLine(centerX, neckStopY, leftHandX, handsStopY, painter)
-        canvas.drawLine(centerX, neckStopY, rightHandX, rightHandY, painter)
+                // body
+                drawLine(centerX, neckStopY, centerX, bodyStopY, bodyPaint)
 
-        // body
-        canvas.drawLine(centerX, neckStopY, centerX, bodyStopY, painter)
-
-        // feet
-        canvas.drawLine(centerX, bodyStopY, leftFeetX, feetStopY, painter)
-        canvas.drawLine(centerX, bodyStopY, rightFeetX, feetStopY, painter)
-    }
-
-    // todo calculate valid handWave
-    private fun changeHandWaveState() {
-        if (handWaveState.handWaveDirection == HandWaveDirection.UP) {
-            val newValue = handWaveState.handWaveValue + speedPxPerSec
-            handWaveState = if (newValue >= 180) {
-                handWaveState.copy(handWaveDirection = HandWaveDirection.DOWN)
-            } else {
-                handWaveState.copy(handWaveValue = newValue)
-            }
-        } else {
-            val newValue = handWaveState.handWaveValue - speedPxPerSec
-            handWaveState = if (newValue <= 0) {
-                if (shouldEndHandWaving()) {
-                    return
-                }
-
-                handWaveState.copy(handWaveDirection = HandWaveDirection.UP)
-            } else {
-                handWaveState.copy(handWaveValue = newValue)
-            }
+                // feet
+                drawLine(centerX, bodyStopY, leftFeetX, feetStopY, handsFeetNeckPaint)
+                drawLine(centerX, bodyStopY, rightFeetX, feetStopY, handsFeetNeckPaint)
+            }.apply { draw(canvas) }
         }
-    }
 
-    // ends animation while hand waves reached 3 times
-    private fun shouldEndHandWaving(): Boolean {
-        ++handWavesCont
-        return if (handWavesCont >= HAND_WAVES_MAX) {
-            handWavesCont = 0
-            isHandWaveActivated = false
-            onHandWaveEndedCallback?.invoke()
-            onHandWaveEndedCallback = null
-            true
-        } else {
-            false
-        }
+        // right hand
+        val rightHandX = centerX + headRadius * cos(Math.toRadians(rightAngle.toDouble())).toFloat()
+        canvas.drawLine(centerX, neckStopY, rightHandX, rightHandY, handsFeetNeckPaint)
     }
 
     override fun dispatchOnSaveInstantState(parcelable: Parcelable?): Parcelable? {
@@ -177,7 +166,27 @@ class HumanViewDelegateImpl : HumanViewDelegate<HumanView> {
 
     override fun dispatchSayHello(onEnd: () -> Unit) {
         onHandWaveEndedCallback = onEnd
-        isHandWaveActivated = true
-        choreographer.postFrameCallback(this)
+        startHandWaveAnimation()
+
+    }
+
+    override fun onAnimationUpdate(animation: ValueAnimator) {
+        armAngle = animation.animatedValue as Float
+        rightHandY = handsStopY * sin(Math.toRadians(rightAngle.toDouble())).toFloat()
+        _view?.invalidate()
+    }
+
+    private fun startHandWaveAnimation() {
+        animator = ValueAnimator.ofFloat(0f, 60f, 0f).apply {
+            duration = HAND_WAVES_DURATION_MILLIS
+            repeatCount = HAND_WAVES_MAX_THREE
+            addUpdateListener(this@HumanViewDelegateImpl)
+            doOnEnd {
+                rightHandY = handsStopY
+                _view?.invalidate()
+                onHandWaveEndedCallback?.invoke()
+            }
+            start()
+        }
     }
 }
