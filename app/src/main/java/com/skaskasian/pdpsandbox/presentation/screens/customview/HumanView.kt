@@ -5,6 +5,10 @@ import android.graphics.Canvas
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.View
+import androidx.core.content.res.ResourcesCompat
+import com.skaskasian.pdpsandbox.R
+import com.skaskasian.pdpsandbox.presentation.screens.customview.mapper.HumanViewAttrsMapper
+import com.skaskasian.pdpsandbox.presentation.screens.customview.model.HumanViewColors
 
 class HumanView
 @JvmOverloads constructor(
@@ -15,9 +19,25 @@ class HumanView
 ) : View(context, attrs, defStyleAttr, defStyleRes),
     HumanViewDelegate<HumanView> by HumanViewDelegateImpl() {
 
+    private val colors: HumanViewColors
+
+    init {
+        val attributes = context.obtainStyledAttributes(
+            attrs,
+            R.styleable.HumanView,
+            defStyleAttr,
+            defStyleRes
+        )
+        colors = HumanViewAttrsMapper.map(
+            attributes,
+            ResourcesCompat.getColor(context.resources, R.color.colorSecondary, context.theme)
+        )
+        attributes.recycle()
+    }
+
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        bindDelegate(view = this)
+        bindDelegate(view = this, colors)
     }
 
     override fun onDetachedFromWindow() {
