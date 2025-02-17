@@ -7,11 +7,8 @@ import android.graphics.Picture
 import android.os.Parcelable
 import android.view.View
 import androidx.core.animation.doOnEnd
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.record
-import com.skaskasian.pdpsandbox.R
-import com.skaskasian.pdpsandbox.presentation.screens.customview.model.HandWaveDirection
-import com.skaskasian.pdpsandbox.presentation.screens.customview.model.HandWaveState
+import com.skaskasian.pdpsandbox.presentation.screens.customview.model.HumanViewColors
 import com.skaskasian.pdpsandbox.presentation.screens.customview.model.SavedState
 import kotlin.math.PI
 import kotlin.math.cos
@@ -24,14 +21,14 @@ private const val STANDARD_DENSITY = 160f
 
 interface HumanViewDelegate<V : View> {
 
-    fun bindDelegate(view: V)
+    fun bindDelegate(view: V, colors: HumanViewColors)
     fun unbindDelegate()
 
     fun dispatchOnLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) = Unit
     fun dispatchOnDraw(canvas: Canvas) = Unit
 
     fun dispatchOnSaveInstantState(parcelable: Parcelable?): Parcelable? = parcelable
-    fun dispatchOnRestoreInstantState(state: Parcelable?)
+    fun dispatchOnRestoreInstantState(state: Parcelable?) = Unit
 
     fun dispatchSayHello(onEnd: () -> Unit)
 }
@@ -44,38 +41,10 @@ class HumanViewDelegateImpl : HumanViewDelegate<HumanView>, ValueAnimator.Animat
     private var animator: ValueAnimator? = null
     private var humanPictureWithoutRightHand: Picture? = null
 
-    private val headPaint: Paint by lazy {
-        Paint().apply {
-            color = ResourcesCompat.getColor(
-                view.resources,
-                R.color.gray,
-                view.context.theme
-            )
-        }
-    }
+    private lateinit var headPaint: Paint
+    private lateinit var bodyPaint: Paint
+    private lateinit var handsFeetNeckPaint: Paint
 
-    private val bodyPaint: Paint by lazy {
-        Paint().apply {
-            color = ResourcesCompat.getColor(
-                view.resources,
-                R.color.blue,
-                view.context.theme
-            )
-            strokeWidth = 3f
-        }
-    }
-
-    private val handsFeetNeckPaint: Paint by lazy {
-        Paint().apply {
-            color = ResourcesCompat.getColor(
-                view.resources,
-                R.color.body,
-                view.context.theme
-            )
-        }
-    }
-
-    private var handWaveState = HandWaveState(handWaveValue = 0f, HandWaveDirection.UP)
     private var onHandWaveEndedCallback: (() -> Unit)? = null
 
     private var speedPxPerSec: Float = 0f
@@ -94,8 +63,24 @@ class HumanViewDelegateImpl : HumanViewDelegate<HumanView>, ValueAnimator.Animat
     private var armAngle = 0f
     private val rightAngle: Float; get() = 0 - armAngle
 
-    override fun bindDelegate(view: HumanView) {
+    override fun bindDelegate(view: HumanView, colors: HumanViewColors) {
         this._view = view
+        initPaints(colors)
+    }
+
+    private fun initPaints(colors: HumanViewColors) {
+        headPaint = Paint().apply {
+            color = colors.head
+        }
+
+        bodyPaint = Paint().apply {
+            color = colors.body
+            strokeWidth = 3f
+        }
+
+        handsFeetNeckPaint = Paint().apply {
+            color = colors.feet
+        }
     }
 
     override fun unbindDelegate() {
@@ -153,17 +138,7 @@ class HumanViewDelegateImpl : HumanViewDelegate<HumanView>, ValueAnimator.Animat
     }
 
     override fun dispatchOnSaveInstantState(parcelable: Parcelable?): Parcelable? {
-        return parcelable?.let {
-            SavedState(it).apply {
-                this.humanWaveState = handWaveState
-            }
-        }
-    }
-
-    override fun dispatchOnRestoreInstantState(state: Parcelable?) {
-        (state as? SavedState)?.let {
-            handWaveState = it.humanWaveState
-        }
+        return parcelable?.let { SavedState(it) }
     }
 
     override fun dispatchSayHello(onEnd: () -> Unit) {
