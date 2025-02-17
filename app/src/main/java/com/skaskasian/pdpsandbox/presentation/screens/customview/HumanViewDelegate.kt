@@ -120,6 +120,8 @@ class HumanViewDelegateImpl : HumanViewDelegate<HumanView>, ValueAnimator.Animat
         leftFeetX = centerX - headRadius
         rightFeetX = centerX + headRadius
 
+        humanPictureWithoutRightHand = null
+
         val speedDpPerSec = DESIRED_SPEED_IN_SEC / STANDARD_DENSITY
         speedPxPerSec = speedDpPerSec * view.resources.displayMetrics.density
     }
