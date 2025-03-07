@@ -58,11 +58,9 @@ class AnimationsViewModel : ViewModel(), ValueAnimator.AnimatorUpdateListener {
     fun startAnim3() {
         currentAnimType.value = AnimType.Anim3
 
-        val animator = ValueAnimator.ofObject(
-            MyTypeEvaluator(),
-            MyExtendedViewState(1f, 0f to 0f, 0f),
-            MyExtendedViewState(0.3f, 0.05f to 0.05f, 10f)
-        )
+        val startValue = MyExtendedViewState(alpha = 1f, scaleXY = 0f to 0f, positionX = 0f)
+        val endValue = MyExtendedViewState(alpha = 0.3f, scaleXY = 0.05f to 0.05f, positionX = 5f)
+        val animator = ValueAnimator.ofObject(MyTypeEvaluator(), startValue, endValue)
         disposables += object : Disposable {
             override fun dispose() {
                 animator.removeAllUpdateListeners()
