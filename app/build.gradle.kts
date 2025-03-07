@@ -2,6 +2,7 @@ import com.android.build.api.variant.FilterConfiguration.FilterType
 import com.android.build.gradle.internal.tasks.factory.dependsOn
 import java.util.Calendar
 import com.skaskasian.buildlogic.applyAndroidxDependencies
+import com.skaskasian.buildlogic.applyComposeDependencies
 import com.skaskasian.buildlogic.applyRoom
 
 plugins {
@@ -10,10 +11,11 @@ plugins {
     alias(libs.plugins.google.ksp)
     id(libs.plugins.pdpsandbox.androidAppPlugin.get().pluginId)
     id("kotlin-parcelize")
+    alias(libs.plugins.compose.compiler)
 }
 
 applyAppName {
-    appName = "SomeAppName"
+    appName = "Pdp SandBox"
 }
 
 android {
@@ -57,6 +59,10 @@ android {
             }
         }
     }
+
+    buildFeatures {
+        compose = true
+    }
 }
 
 dependencies {
@@ -64,6 +70,7 @@ dependencies {
     implementation(projects.simpleFeature)
 
     applyAndroidxDependencies()
+    applyComposeDependencies(project)
 
     applyRoom(project)
     implementation(libs.google.material)

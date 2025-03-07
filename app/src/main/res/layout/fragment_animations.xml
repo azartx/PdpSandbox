@@ -50,6 +50,12 @@
                 android:text="Open motion layout anim screen" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/chip_compose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Open compose anim screen" />
+
+            <com.google.android.material.chip.Chip
                 android:id="@+id/chip_anim_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

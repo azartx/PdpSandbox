@@ -15,6 +15,7 @@ import com.google.android.material.chip.Chip
 import com.skaskasian.pdpsandbox.R
 import com.skaskasian.pdpsandbox.databinding.FragmentAnimationsBinding
 import com.skaskasian.pdpsandbox.presentation.screens.animations.model.CircleDefaultsModel
+import com.skaskasian.pdpsandbox.presentation.screens.composeanim.ComposeAnimFragment
 import com.skaskasian.pdpsandbox.presentation.screens.lottieanima.LottieAnimFragment
 import com.skaskasian.pdpsandbox.presentation.screens.motionlayoutanim.MotionLayoutAnimationFragment
 import kotlinx.coroutines.flow.collectLatest
@@ -66,6 +67,7 @@ class AnimationsFragment : Fragment(), AnimationDelegate by AnimationDelegateImp
             chipCircleDefault.onClick {}
             chipLottie.onClick { openFragment<LottieAnimFragment>() }
             chipMotionLayout.onClick { openFragment<MotionLayoutAnimationFragment>() }
+            chipMotionLayout.onClick { openFragment<ComposeAnimFragment>() }
             chipAnim1.onClick { viewModel.startAnim1() }
             chipAnim2.onClick { viewModel.startAnim2() }
             chipAnim3.onClick { viewModel.startAnim3() }
