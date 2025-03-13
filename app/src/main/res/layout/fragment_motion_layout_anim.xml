@@ -9,6 +9,14 @@
     app:layoutDescription="@xml/motion_scene"
     tools:showPaths="true">
 
+    <TextView
+        android:id="@+id/textview_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Drag me!"
+        tools:layout_editor_absoluteX="178dp"
+        tools:layout_editor_absoluteY="139dp" />
+
     <com.skaskasian.pdpsandbox.presentation.views.CircleView
         android:id="@+id/circleview_circle"
         android:layout_width="8dp"

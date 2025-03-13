@@ -2,11 +2,11 @@ package com.skaskasian.pdpsandbox.presentation.views
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
-
+import androidx.core.content.res.ResourcesCompat
+import com.skaskasian.pdpsandbox.R
 
 class CircleView
 @JvmOverloads constructor(
@@ -16,7 +16,9 @@ class CircleView
     defStyleRes: Int = 0,
 ) : View(context, attrs, defStyleAttr, defStyleRes) {
 
-    private val paint: Paint = Paint().apply { color = Color.BLACK }
+    private val paint: Paint = Paint().apply {
+        color = ResourcesCompat.getColor(context.resources, R.color.colorSecondary, context.theme)
+    }
 
     override fun onDraw(canvas: Canvas) {
         canvas.drawCircle(

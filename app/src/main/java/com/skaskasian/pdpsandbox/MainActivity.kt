@@ -10,6 +10,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.skaskasian.pdpsandbox.presentation.screens.algo.AlgoFragment
 import com.skaskasian.pdpsandbox.presentation.screens.helloworld.HelloWorldFragment
 import com.skaskasian.pdpsandbox.presentation.screens.animations.AnimationsFragment
+import com.skaskasian.pdpsandbox.presentation.screens.composeanim.ComposeAnimFragment
 import com.skaskasian.pdpsandbox.presentation.screens.contentlist.ContentListFragment
 import com.skaskasian.pdpsandbox.presentation.screens.drawableanimations.ImageAnimFragment
 import com.skaskasian.pdpsandbox.presentation.screens.customview.CustomViewsFragment
@@ -53,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_pagination -> navigate<ContentListFragment>()
             R.id.action_animation -> navigate<AnimationsFragment>()
+            R.id.action_animation_compose -> navigate<ComposeAnimFragment>()
             R.id.action_image_animation -> navigate<ImageAnimFragment>()
             R.id.action_motion_layout -> navigate<MotionLayoutAnimationFragment>()
             R.id.action_motion_layout2 -> navigate<MotionLayoutFragmentsChangingFragment>()

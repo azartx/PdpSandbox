@@ -19,68 +19,93 @@
 
     </FrameLayout>
 
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chipgroup_chips"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        app:chipSpacingVertical="0dp">
+        android:layout_weight="1">
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip_circle_default"
-            android:layout_width="wrap_content"
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipgroup_chips"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Default circle state" />
+            android:paddingHorizontal="10dp"
+            app:chipSpacingVertical="0dp">
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip_anim_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Anim1: Move right (VA)" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_circle_default"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Default circle state" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip_anim_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Anim2: ScaleXY (VA)" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_lottie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Open lottie anim screen" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip_anim_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Anim3: Scale, position, alpha (VA)" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_motion_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Open motion layout anim screen" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip_anim_4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Anim4: translation (OA)" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_compose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Open compose anim screen" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip_anim_5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Anim5: set (AS)" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_anim_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Anim1: Move right (VA)" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip_anim_6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:stateListAnimator="@xml/anim_button_increase"
-            android:text="Anim6: increase (StateListAnimator)" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_anim_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Anim2: ScaleXY (VA)" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip_anim_7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Anim7: rotation (OA-keyframes)" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_anim_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Anim3: Scale, position, alpha (VA)" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip_anim_8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Anim8: node and rotate (ViewPropertyAnimator)" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_anim_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Anim4: translation (OA)" />
 
-    </com.google.android.material.chip.ChipGroup>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_anim_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Anim5: set (AS)" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_anim_6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:stateListAnimator="@xml/anim_button_increase"
+                android:text="Anim6: increase (StateListAnimator)" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_anim_7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Anim7: rotation (OA-keyframes)" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_anim_8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Anim8: node and rotate (ViewPropertyAnimator)" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+    </ScrollView>
 
 </LinearLayout>

@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.View
+import com.skaskasian.pdpsandbox.presentation.screens.customview.model.SavedState
 import androidx.core.content.res.ResourcesCompat
 import com.skaskasian.pdpsandbox.R
 import com.skaskasian.pdpsandbox.presentation.screens.customview.mapper.HumanViewAttrsMapper
@@ -58,7 +59,7 @@ class HumanView
     }
 
     override fun onRestoreInstanceState(state: Parcelable?) {
-        super.onRestoreInstanceState(state)
+        super.onRestoreInstanceState((state as? SavedState)?.superState ?: state)
         dispatchOnRestoreInstantState(state)
     }
 

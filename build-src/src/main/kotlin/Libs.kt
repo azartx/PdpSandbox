@@ -1,7 +1,12 @@
 package com.skaskasian.buildlogic
 
+import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.DependencyHandlerScope
+import org.gradle.kotlin.dsl.the
+
+internal val Project.libs: LibrariesForLibs
+    get() = the<LibrariesForLibs>()
 
 object Libs {
 
@@ -43,10 +48,24 @@ fun DependencyHandlerScope.applyAndroidxDependencies() {
     implementation(Libs.Dependencies.androidxAppCompat)
 }
 
+fun DependencyHandlerScope.applyComposeDependencies(project: Project) {
+    implementation(platform(project.libs.androidx.compose.bom))
+    implementation(project.libs.androidx.compose.animation)
+    implementation(project.libs.androidx.compose.runtime)
+    implementation(project.libs.androidx.compose.material.iconsExtended)
+    implementation(project.libs.androidx.compose.foundation.layout)
+    implementation(project.libs.androidx.compose.ui.util)
+    implementation(project.libs.androidx.compose.ui.graphics)
+    implementation(project.libs.androidx.compose.ui.text)
+    implementation(project.libs.androidx.compose.ui.tooling.preview)
+    implementation(project.libs.androidx.compose.material3)
+    implementation(project.libs.androidx.compose.materialWindow)
+}
+
 fun DependencyHandlerScope.applyRoom(project: Project) {
-    project.catalog.apply {
-        implementation(getVersion("androidx-room"))
-        implementation(getVersion("androidx-roomKtx"))
-        "ksp"(getVersion("androidx-roomCompiler"))
+    project.libs.also { libs ->
+        implementation(libs.androidx.room)
+        implementation(libs.androidx.roomKtx)
+        ksp(libs.androidx.roomCompiler)
     }
 }

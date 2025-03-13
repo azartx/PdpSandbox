@@ -16,7 +16,7 @@ interface AnimationDelegate {
     fun setDefaultAnimViewState()
 }
 
-@Suppress("UNCHECKED_CAST") class AnimationDelegateImpl : AnimationDelegate {
+class AnimationDelegateImpl : AnimationDelegate {
 
     private var _view: View? = null
     private var viewDefaults: CircleDefaultsModel? = null
@@ -36,6 +36,7 @@ interface AnimationDelegate {
         viewDefaults = null
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun applyAnim(type: AnimType, data: Any) {
         when (type) {
             AnimType.Anim1 -> applyAnim1Value(data as Float)

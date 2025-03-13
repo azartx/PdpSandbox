@@ -16,4 +16,7 @@ gradlePlugin {
 dependencies {
     implementation(libs.android.gradlePlugin)
     implementation(gradleKotlinDsl())
+
+    // to apply version catalog under src
+    implementation(files(libs.javaClass.superclass.protectionDomain.codeSource.location))
 }
