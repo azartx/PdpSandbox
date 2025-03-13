@@ -28,6 +28,12 @@ android {
         buildConfigField("boolean", "IS_COMMANDS_SPAMMING_ENABLED", "true")
     }
 
+    buildTypes {
+        getByName("debug") {
+            isDebuggable = true
+        }
+    }
+
     flavorDimensions += "app"
     productFlavors {
         create("free") {
@@ -76,6 +82,8 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    debugImplementation(libs.leakCanary)
 }
 
 val createFlavourTimestampReportTask: TaskProvider<Task> = tasks.register("createFlavourTimestampReportTask") {
