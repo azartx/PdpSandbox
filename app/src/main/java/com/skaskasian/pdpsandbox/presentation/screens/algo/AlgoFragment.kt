@@ -14,16 +14,25 @@ import androidx.core.view.setMargins
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import com.skaskasian.pdpsandbox.databinding.FragmentAlgoBinding
+import com.skaskasian.pdpsandbox.di.AppDi
+import com.skaskasian.pdpsandbox.di.Injectable
+import com.skaskasian.pdpsandbox.di.Scope
+import com.skaskasian.pdpsandbox.di.get
+import com.skaskasian.pdpsandbox.presentation.screens.algo.di.createAlgoScopeDependencies
 import com.skaskasian.pdpsandbox.presentation.screens.algo.utils.colors
 import com.skaskasian.pdpsandbox.presentation.screens.contentlist.paging.ContentAdapter
 
-class AlgoFragment : Fragment() {
+class AlgoFragment : Fragment(), Injectable {
 
     private var _binding: FragmentAlgoBinding? = null
     private val binding get() = _binding!!
 
+    override fun getScope(): Scope {
+        return this::class
+    }
+
     private val viewModel: AlgoViewModel by lazy {
-        ViewModelProvider(this, AlgoViewModelFactory())[AlgoViewModel::class.java]
+        ViewModelProvider(this, AlgoViewModelFactory(get()))[AlgoViewModel::class.java]
     }
 
     private val contentAdapter: ContentAdapter by lazy { ContentAdapter({/*TODO*/}) }
@@ -32,6 +41,7 @@ class AlgoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        AppDi.initScope(getScope(), createAlgoScopeDependencies())
         _binding = FragmentAlgoBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -79,7 +89,7 @@ class AlgoFragment : Fragment() {
         }
     }
 
-    // одновляем фон для всех вложенных чайлдов рекурсивно
+    // обновляем фон для всех вложенных чайлдов рекурсивно
     private fun updateColors(viewGroup: ViewGroup?) {
         if (viewGroup != null) {
             viewGroup.setBackgroundColor(colors.random())
@@ -90,5 +100,6 @@ class AlgoFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        AppDi.closeScope(getScope())
     }
 }

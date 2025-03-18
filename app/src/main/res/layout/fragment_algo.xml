@@ -9,22 +9,40 @@
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/serachview_content"
-        android:layout_width="match_parent"
-        android:hint="Input text here"
         style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search" />
+
+    <FrameLayout
+        android:id="@+id/frame_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-        <FrameLayout
-            android:layout_width="match_parent"
+    <com.google.android.material.chip.ChipGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_newest"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/frame_container" />
+            android:text="Newest" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_latest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Latest" />
+
+    </com.google.android.material.chip.ChipGroup>
 
     <Button
+        android:id="@+id/button_regenerate_colors"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Regenerate colors"
         android:layout_gravity="center_horizontal"
-        android:id="@+id/button_regenerate_colors" />
+        android:text="Regenerate colors" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_algo"

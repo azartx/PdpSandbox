@@ -83,6 +83,8 @@ dependencies {
     implementation(libs.paging.common)
     implementation(libs.airbnb.lottie)
     implementation(libs.bumptech.glide)
+    implementation(libs.retrofit)
+    implementation(libs.retrofitGconConverter)
 
     kotlinCompilerPluginClasspath(projects.sandboxCompilerPlugin)
 
