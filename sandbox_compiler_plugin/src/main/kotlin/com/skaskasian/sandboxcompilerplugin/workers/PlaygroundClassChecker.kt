@@ -1,4 +1,4 @@
-package com.skaskasian.sandboxcompilerplugin
+package com.skaskasian.sandboxcompilerplugin.workers
 
 import com.skaskasian.sandboxcompilerplugin.utils.warn
 import org.jetbrains.kotlin.cli.common.messages.MessageCollector

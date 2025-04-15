@@ -1,6 +1,7 @@
-package com.skaskasian.sandboxcompilerplugin
+package com.skaskasian.sandboxcompilerplugin.processor
 
 import com.google.auto.service.AutoService
+import com.skaskasian.sandboxcompilerplugin.firextensions.SandboxFirExtensionRegistrar
 import org.jetbrains.kotlin.cli.common.messages.MessageCollector
 import org.jetbrains.kotlin.compiler.plugin.CompilerPluginRegistrar
 import org.jetbrains.kotlin.compiler.plugin.ExperimentalCompilerApi
@@ -18,7 +19,10 @@ class SandboxCompilerPluginRegistrar : CompilerPluginRegistrar() {
     @OptIn(FirExtensionApiInternals::class)
     override fun ExtensionStorage.registerExtensions(configuration: CompilerConfiguration) {
 
-        val logger = configuration.get(CommonConfigurationKeys.MESSAGE_COLLECTOR_KEY, MessageCollector.NONE)
+        val logger = configuration.get(
+            CommonConfigurationKeys.MESSAGE_COLLECTOR_KEY,
+            MessageCollector.NONE
+        )
 
         FirExtensionRegistrarAdapter.registerExtension(SandboxFirExtensionRegistrar(logger))
     }
