@@ -52,4 +52,9 @@
         android:id="@+id/action_custom_views"
         android:title="Custom view examples"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_markdown_reader"
+        android:title="Markdown reader"
+        app:showAsAction="never" />
 </menu>

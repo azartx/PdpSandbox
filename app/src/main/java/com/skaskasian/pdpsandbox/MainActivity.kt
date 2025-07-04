@@ -15,6 +15,7 @@ import com.skaskasian.pdpsandbox.presentation.screens.contentlist.ContentListFra
 import com.skaskasian.pdpsandbox.presentation.screens.drawableanimations.ImageAnimFragment
 import com.skaskasian.pdpsandbox.presentation.screens.customview.CustomViewsFragment
 import com.skaskasian.pdpsandbox.presentation.screens.lottieanima.LottieAnimFragment
+import com.skaskasian.pdpsandbox.presentation.screens.markdownreader.presentation.home.MarkdownReaderFragment
 import com.skaskasian.pdpsandbox.presentation.screens.motionlayoutanim.MotionLayoutAnimationFragment
 import com.skaskasian.pdpsandbox.presentation.screens.motionlayoutanim.MotionLayoutFragmentsChangingFragment
 import com.skaskasian.pdpsandbox.presentation.screens.patterns.PatternsFragment
@@ -62,6 +63,7 @@ class MainActivity : AppCompatActivity() {
             R.id.action_patterns -> navigate<PatternsFragment>()
             R.id.action_algos -> navigate<AlgoFragment>()
             R.id.action_custom_views -> navigate<CustomViewsFragment>()
+            R.id.action_markdown_reader -> navigate<MarkdownReaderFragment>()
             else -> super.onOptionsItemSelected(item)
         }
     }
